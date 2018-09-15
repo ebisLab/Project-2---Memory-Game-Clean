@@ -135,7 +135,11 @@ let cardClicked = function() {
 		if(!busy){
 			clicked.classList.add('open','show');
 		}
-		cardOpen();
+		cardOpen(); //matching logic to compare cards
+
+		if(clicked.classList.contains('dontCount')=== false) {
+			moveNumber(); //count moves
+		}
 
 	}
 }
