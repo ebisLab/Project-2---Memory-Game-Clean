@@ -9,6 +9,8 @@ let cards = [...card];
 let busy = false;
 let coutnMove = false;
 
+//timers
+
 // moves counter
 let moves = 0;
 let moveCounter = document.querySelector('.moves');
@@ -109,15 +111,18 @@ function newBoard()
 		deckCards.appendChild(cards[i]);
 	};
 
-	//reset moves
+	//star counter
+	let star = document.getElementsByClassName('fa-star');
+	star[0].style.color = 'black';
+	star[1].style.color = 'black';
+	star[2].style.color = 'black';
+
+
+	//clicked moves
 	moves = 0;
 	moveCounter.innerHTML = moves;
 
-	//star rating
-	/*let star = document.getElementsByClassName('fa-star');
-	star[0].star.color = 'black';
-	star[1].star.color = 'black';
-	star[2].star.color = 'black';*/
+	
 
 
 }
@@ -137,9 +142,13 @@ let cardClicked = function() {
 		}
 		cardOpen(); //matching logic to compare cards
 
+
 		if(clicked.classList.contains('dontCount')=== false) {
-			moveNumber(); //count moves
+			moveNumber(); //matching logic to count moves
 		}
+
+		clicked.classList.add('dontCount');
+		starRating(); //star rating logic 
 
 	}
 }
@@ -166,7 +175,7 @@ if (opened.length === 2){
 };
 };
 
-//If the cards DO match 
+//Matching conditions 
 function matched(){
 	let openCards = document.getElementsByClassName('open');
 
@@ -185,6 +194,26 @@ function unmatched(){
 		listOfOpenCards[0].classList.remove('show', 'open', 'dontCount');
 		busy = false;
 	}, 500);
+}
+
+//move star counter
+function starRating() {
+	let star = document.getElementsByClassName('fa-star');
+
+	if (moves <= 20) {
+		star[0].style.color = 'yellow';
+		star[1].style.color = 'yellow';
+		star[2].style.color = 'yellow';
+	} else if (moves > 20 && moves <= 30) {
+		star[0].style.color = 'yellow';
+		star[1].style.color = 'yellow';
+		star[2].style.color = 'black';
+	} else if (moves >30 ) {
+		star[0].style.color = 'yellow';
+		star[1].style.color = 'yellow';
+		star[2].style.color = 'yellow';
+	};
+
 }
 
 //move counter
