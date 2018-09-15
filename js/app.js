@@ -5,18 +5,20 @@
 let card = document.getElementsByClassName('card');
 let cards = [...card];
 
+//declaring variable for stop/ just in case other cards open
+let busy = false;
+let coutnMove = false;
+
 // moves counter
 let moves = 0;
-//let moveCounter = document.querySelector()
+let moveCounter = document.querySelector('.moves');
 
 //timer
 
 
 
 
-//declaring variable for stop/ just in case other cards open
-let busy = false;
-let coutnMove = false;
+
 
 
 /*
@@ -106,6 +108,18 @@ function newBoard()
 	for (let i=0; i < cards.length; i++) {
 		deckCards.appendChild(cards[i]);
 	};
+
+	//reset moves
+	moves = 0;
+	moveCounter.innerHTML = moves;
+
+	//star rating
+	/*let star = document.getElementsByClassName('fa-star');
+	star[0].star.color = 'black';
+	star[1].star.color = 'black';
+	star[2].star.color = 'black';*/
+
+
 }
 
 
@@ -167,6 +181,12 @@ function unmatched(){
 		listOfOpenCards[0].classList.remove('show', 'open', 'dontCount');
 		busy = false;
 	}, 500);
+}
+
+//move counter
+function moveNumber(){
+	moves++;
+	moveCounter.innerHTML = moves;
 }
 
 
