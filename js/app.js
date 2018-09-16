@@ -7,7 +7,7 @@ let cards = [...card];
 
 //declaring variable for stop/ just in case other cards open
 let busy = false;
-let coutnMove = false;
+//let coutnMove = false;
 
 		//timers
 // moves counter
@@ -21,6 +21,8 @@ let startTimer = false;
 let minute = 0;
 let second = 0;
 
+//winning popup
+let popUp = document.getElementById('win-board');
 
  
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -42,7 +44,7 @@ function shuffle(array) {
 
 
 //create list item from iteration
-	
+/*	
 function createTheGameCanvas() { //this should append to the deck class
 
 }
@@ -53,7 +55,7 @@ function compareCards (cardA, cardB) {
 function gameOver()
  {
  
- }
+ }*/
  
  
  /*
@@ -107,7 +109,7 @@ function newBoard()
 	timer.innerHTML = ` ${minute} min ${second} sec`; //add this to html
 	clearInterval(time);
 
-	
+	popUp.classList.remove('show'); //hide pop up
 
 
 }
@@ -124,7 +126,7 @@ let cardClicked = function() {
 	if(clicked.classList.contains('dontCount')===false){
 		if(!busy){
 			clicked.classList.add('open','show');
-		}
+		
 		cardOpen(); //matching logic to compare cards
 
 
@@ -139,12 +141,12 @@ let cardClicked = function() {
 		if(!startTimer) {
 			countTime();
 			startTimer = true;
+						};
 
-		}
-
-	}
-}
-
+			congratulationsPopUp(); //display the pop up
+	};
+};
+};
 
 //STEP 5
 //Seclect open cards (Flipped Up cards)
@@ -202,8 +204,8 @@ function starRating() {
 		star[2].style.color = 'black';
 	} else if (moves >30 ) {
 		star[0].style.color = 'yellow';
-		star[1].style.color = 'yellow';
-		star[2].style.color = 'yellow';
+		star[1].style.color = 'black';
+		star[2].style.color = 'black';
 	};
 
 }
@@ -229,6 +231,22 @@ function countTime(){
 }
 
 
+ //*********POPUP********** //
+function congratulationsPopUp(){
+	let matchedCards = document.getElementsByClassName('match');
+
+	if(matchedCards.length === 16) {
+		clearInterval(time); //stop timer
+		let ratingStars = document.querySelector('.stars').innerHTML;
+		let finalTime = timer.innerHTML;
+		popUp.classList.add('show');
+
+		document.querySelector('.total-moves').innerHTML = moves;
+		document.querySelector('.total-time').innerHTML = finalTime;
+		document.querySelector('.total-rating').innerHTML = ratingStars;
+	};
+}
+
 //restart game 
 let refresh = document.querySelector('.fa-repeat');
 refresh.addEventListener('click', newBoard);
@@ -237,6 +255,10 @@ refresh.addEventListener('click', newBoard);
  for (let i=0; i < cards.length; i++) {
  	cards[i].addEventListener('click', cardClicked);
  }
+
+
+
+
  /*
  Features: When page starts, reload
 all cards are face down
@@ -248,8 +270,5 @@ when you click on card 2
 								change background color
 			or else face down
 			
-	if user matches the cards the counter restarts
-	or else it keeps going until the third try
-					if the third try and no matches
-								loose game
+	
 */
