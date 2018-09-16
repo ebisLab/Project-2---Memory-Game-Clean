@@ -137,8 +137,7 @@ function matched(){
 
 	openCards[0].classList.add('match', 'dontCount');
 	openCards[1].classList.add('match', 'dontCount');
-	openCards[1].classList.remove('show', 'open'); // if not match, revert
-	openCards[0].classList.remove('show', 'open'); // if not match revert
+	openCards[1].classList.remove('show', 'open');
 	busy = false; 
 }
 
@@ -185,9 +184,7 @@ function starRating() {
 		star[1].style.color = 'black';
 		star[2].style.color = 'black';
 	};
-
 }
-
 
 //move text counter
 function moveNumber(){
