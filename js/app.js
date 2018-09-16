@@ -9,26 +9,17 @@ let cards = [...card];
 let busy = false;
 let coutnMove = false;
 
-//timers
-
+		//timers
 // moves counter
 let moves = 0;
 let moveCounter = document.querySelector('.moves');
 
 //timer
-
-
-
-
-
-
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+let timer = document.querySelector('.timer');
+let time;
+let startTimer = false;
+let minute = 0;
+let second = 0;
 
 
  
@@ -64,19 +55,6 @@ function gameOver()
  
  }
  
- //Counter SetUp
- 
- //If all the cards match
- 
-
- 
- //Reset Timer
- 
- 
- //to stop 
- 
- 	
- 	//clicking off the grid. 
  
  /*
  * set up the event listener for a card. If a card is clicked:
@@ -122,6 +100,13 @@ function newBoard()
 	moves = 0;
 	moveCounter.innerHTML = moves;
 
+	//reset timer
+	startTimer = false;
+	minute = 0;
+	second = 0;
+	timer.innerHTML = ` ${minute} min ${second} sec`; //add this to html
+	clearInterval(time);
+
 	
 
 
@@ -149,6 +134,13 @@ let cardClicked = function() {
 
 		clicked.classList.add('dontCount');
 		starRating(); //star rating logic 
+
+		//measure time
+		if(!startTimer) {
+			countTime();
+			startTimer = true;
+
+		}
 
 	}
 }
@@ -216,10 +208,24 @@ function starRating() {
 
 }
 
+
 //move counter
 function moveNumber(){
 	moves++;
 	moveCounter.innerHTML = moves;
+}
+
+//game timer
+function countTime(){
+	second=1;
+	time = setInterval(function(){
+		timer.innerHTML = `${minute} min ${second} sec`;
+		second++;
+		if (second == 60) {
+			minute++;
+			second = 0;
+		};
+	}, 1000);
 }
 
 
