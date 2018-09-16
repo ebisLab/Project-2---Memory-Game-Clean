@@ -1,13 +1,13 @@
 /*
  * Create a list that holds all of your cards
  */
- //exactly as below let cardSelector = document.getElementsByClassName(“card”);
+
 let card = document.getElementsByClassName('card');
 let cards = [...card];
 
 //declaring variable for stop/ just in case other cards open
 let busy = false;
-//let coutnMove = false;
+
 
 		//timers
 // moves counter
@@ -39,53 +39,24 @@ function shuffle(array) {
 
     return array;
 }
-
-
-
-
-//create list item from iteration
-/*	
-function createTheGameCanvas() { //this should append to the deck class
-
-}
-
-function compareCards (cardA, cardB) {
-}
-
-function gameOver()
- {
  
- }*/
- 
- 
- /*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-//create new board with shuffled cards when page is refreshed
-document.body.onload = newBoard();
+//new board when refreshed
+document.body.onload = createANewGameCanvas();
 
 //New Board 
-function newBoard()
+function createANewGameCanvas()
 {
-				//STEP 4 Initialize the Board
+				// Initialize the Board
 
-	//4A clean board, cards face closed
+	//clean board, cards face closed
 	let cardList = document.getElementsByClassName('card');
 	for (let i=0; i< cards.length; i++) {
 		cardList[i].classList.remove('open', 'show', 'match', 'dontCount');
 	};
 
-	//4B 
+	
 	shuffle(cards);
-	//4C Append all items in the shuffled list 
+	//Append all items in the shuffled list 
 	let deckCards = document.getElementsByClassName('deck')[0];
 	for (let i=0; i < cards.length; i++) {
 		deckCards.appendChild(cards[i]);
@@ -110,17 +81,10 @@ function newBoard()
 	clearInterval(time);
 
 	popUp.classList.remove('show'); //hide pop up
-
-
 }
 
 
-
-
-
-
-
-//STEP 6 --- display the card's symbol when card is clicked
+//display the card's symbol when card is clicked
 let cardClicked = function() {
 	let clicked = this;
 	if(clicked.classList.contains('dontCount')===false){
@@ -148,16 +112,14 @@ let cardClicked = function() {
 };
 };
 
-//STEP 5
-//Seclect open cards (Flipped Up cards)
+//Seclect open cards (Flip Up cards)
 function cardOpen() {
-	//store our selector check for the class 'open' in a variable called 'opened'
+	
 let opened = document.getElementsByClassName('open');
 
 console.log(opened.length, busy)
 
-//Check to see if the two open cards match
-// There are two cards with the class open
+//If 2 cards match logic
 if (opened.length === 2){
 	busy = true; //no other cards will be opened at that moment
 	if(opened[0].innerHTML === opened[1].innerHTML) {
@@ -190,17 +152,33 @@ function unmatched(){
 	}, 500);
 }
 
+//*********POPUP********** //
+function congratulationsPopUp(){
+	let matchedCards = document.getElementsByClassName('match');
+
+	if(matchedCards.length === 16) {
+		clearInterval(time); //stop timer
+		let ratingStars = document.querySelector('.stars').innerHTML;
+		let finalTime = timer.innerHTML;
+		popUp.classList.add('show');
+
+		document.querySelector('.total-moves').innerHTML = moves;
+		document.querySelector('.total-time').innerHTML = finalTime;
+		document.querySelector('.total-rating').innerHTML = ratingStars;
+	};
+}
+
 //move star counter
 function starRating() {
 	let star = document.getElementsByClassName('fa-star');
 
 	if (moves <= 20) {
-		star[0].style.color = 'yellow';
-		star[1].style.color = 'yellow';
-		star[2].style.color = 'yellow';
+		star[0].style.color = 'green';
+		star[1].style.color = 'green';
+		star[2].style.color = 'green';
 	} else if (moves > 20 && moves <= 30) {
-		star[0].style.color = 'yellow';
-		star[1].style.color = 'yellow';
+		star[0].style.color = 'orange';
+		star[1].style.color = 'orange';
 		star[2].style.color = 'black';
 	} else if (moves >30 ) {
 		star[0].style.color = 'yellow';
@@ -211,7 +189,7 @@ function starRating() {
 }
 
 
-//move counter
+//move text counter
 function moveNumber(){
 	moves++;
 	moveCounter.innerHTML = moves;
@@ -231,30 +209,18 @@ function countTime(){
 }
 
 
- //*********POPUP********** //
-function congratulationsPopUp(){
-	let matchedCards = document.getElementsByClassName('match');
+ 
 
-	if(matchedCards.length === 16) {
-		clearInterval(time); //stop timer
-		let ratingStars = document.querySelector('.stars').innerHTML;
-		let finalTime = timer.innerHTML;
-		popUp.classList.add('show');
 
-		document.querySelector('.total-moves').innerHTML = moves;
-		document.querySelector('.total-time').innerHTML = finalTime;
-		document.querySelector('.total-rating').innerHTML = ratingStars;
-	};
-}
-
-//restart game 
-let refresh = document.querySelector('.fa-repeat');
-refresh.addEventListener('click', newBoard);
  
  // event Listener for a card
  for (let i=0; i < cards.length; i++) {
  	cards[i].addEventListener('click', cardClicked);
  }
+
+ //restart game 
+let refresh = document.querySelector('.fa-repeat');
+refresh.addEventListener('click', createANewGameCanvas);
 
 
 
